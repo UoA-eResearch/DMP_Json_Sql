@@ -8,7 +8,7 @@ mysql_select_db("dmp_tool", $con);
 
 /* show View */
 $sql = "SELECT * FROM `vw_dmp` \n"
-    . "ORDER BY dmp_id ASC";
+    . "ORDER BY dmp_id DESC";
 
 $result = mysql_query($sql) or die('cannot show columns');
 echo '<!DOCTYPE html>';

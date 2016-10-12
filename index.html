@@ -8,21 +8,45 @@ and open the template in the editor.
     <head>
         <title>Research Data Management Plans</title>
         <link rel="stylesheet" href="form_css/style1.css">
+         <script type="text/javascript">
+             function checktext() {
+                 var x = document.getElementById("json_file").value;
+                 var _validFileExtensions = [".json"];
+                 var isValid=false;
+                 if (x.length > 0)
+                 {
+                     if(x.split('.')[1]=='json')
+                         isValid=true;
+                 }
+                 else
+                 {
+                     isValid=false;
+                 }
+                 if (isValid==false)
+                 {
+                     alert("Please select valid " + _validFileExtensions + " file");
+                 }
+                 return isValid;
+             }
+          </script>
         </head>
         <body>
         <h2>Research Data Management Plans</h2>
-        <div><h3>Import Json file contents into Database</h3></div>
-        <form action="dmp_json_mysql.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="json_file"> <br> 
-            <input type="submit" name="upload" value="Import Json into Database">
-        </form>
-        <div><h3>Export Json file to Word Document (.docx)</h3></div>
-        <form action="export_dmp_to_doc.php" method="post" enctype="multipart/form-data">
-            <input type="submit" name="export" value="Export to .docx">
-        </form>
-         <div><h3>View all DMPs</h3></div>
+        <div>
+        <form method="post" enctype="multipart/form-data" onsubmit="return checktext();">
+            <input type="file" name="json_file" id="json_file"> <br>
+            <h3>Import Json file contents into Database</h3>
+            <input type="submit" name="btn_sql" id="upload" value="Import Json into Database" onclick="return checktext();" formaction="dmp_json_mysql.php">
+            <h3>Export Json file contents directly to Word Document (.docx)</h3>
+            <input type="submit" name="btn_doc" id="upload" value="Export Json into Word Directly" onclick="return checktext();" formaction="direct_export_dmp_to_doc.php">
+        </form></div>
+        <div><h3>Export last imported Json file contents from database to Word Document (.docx)</h3>
+        <form action="export_dmp_to_doc.php" method="post" enctype="multipart/form-data" onsubmit="return checktext();">
+            <input type="submit" name="export" value="Export to .docx"  onsubmit="return checktext();">
+        </form></div>
+         <div><h3>View all DMPs</h3>
         <form action="view_all_dmps.php" method="post" enctype="multipart/form-data">
             <input type="submit" name="view" value="View all DMPs">
-        </form>
+        </form></div>
     </body>
 </html>
