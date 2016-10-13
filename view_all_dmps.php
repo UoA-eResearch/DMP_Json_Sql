@@ -11,12 +11,12 @@ $sql = "SELECT * FROM `vw_dmp` \n"
     . "ORDER BY dmp_id DESC";
 
 $result = mysql_query($sql) or die('cannot show columns');
-echo '<!DOCTYPE html>';
-echo '<html>';
-echo '<head>';
-echo '<link rel="stylesheet" href="form_css/style1.css">';
-echo '</head>';
-echo '<body>';
+$html= '<!DOCTYPE html>';
+$html.='<html>';
+$html.='<head>';
+$html.='<link rel="stylesheet" href="form_css/style1.css">';
+$html.='</head>';
+$html.='<body class="table">';
 
 $arr=['DMP No.', 'DMP Created Date', 'Project Title', 'Project Start Date', 'Project End Date', 'Contributor First Name', 'Last Name', 'Affiliation', 'Email', 
     'Funding Agency', 'Funding ID', 'Document Short Name', 'Summary', 'Type of Data', 'Description', 'Data Collection Process', 'Data Organisation Process',
@@ -25,17 +25,35 @@ $arr=['DMP No.', 'DMP Created Date', 'Project Title', 'Project Start Date', 'Pro
     'License Logo', 'The long-term preservation plan for the dataset', 'Research Data Management Contact','Required Resources', 'Data Issues' ,
     'Issues Description', 'Policy Control Body', 'Policy Requirements'];
 
+    $html.='<table font="12" border="1">';
+    $html.='<tr><th colspan="2"><h1 class="pen-title">Research Data Management Plan</h1></th></tr>';
 if(mysql_num_rows($result))
 {
-    echo '<h3>All Research Data Management Plans</h3>';
+    $html.='<tr align="left">';
+    $html.='<td colspan="2" bgcolor="#008CBA"><input type="button" onClick=parent.location="index.html" value="Back to Home"></td>';
+    $html.='</tr>';
     while($row = mysql_fetch_row($result))
     {
         foreach($row as $key=>$value)
         {
-            echo  '<p><b>'. $arr[$key]. ': </b> ' . $value .'</p>';
+            $html.='<tr class="form-module span" align="left">';
+            $html.='<td width="200" class="pen-title-left">'. $arr[$key] . ': ' .'</td>';
+            $html.='<td class="pen-title-left">' . $value .'</td>';
+            $html.='</tr>';
         }
-        echo '<hr>';
+        $html.='<tr rowspan="2">';
+        $html.='<td height="50" bgcolor="#FFFFFF"> </td>';
+        $html.='<td bgcolor="#FFFFFF"> </td>';
+        $html.='</tr>';
     }
-}      
-echo '</body>';
-echo '</html>';
+}
+ else {
+    $html.='<tr class="form-module span" align="left">';
+    $html.='<td width="200" bgcolor="#008CBA" class="pen-title-left"> No DMP found </td>';
+    $html.='<td bgcolor="#FFFFFF"><input type="button" onClick=parent.location="index.html" value="Back to Home"></td>';
+    $html.='</tr>';
+}
+$html.='</table>';
+$html.='</body></html>';
+
+echo $html;

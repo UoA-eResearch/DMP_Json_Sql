@@ -82,34 +82,44 @@ $policyreq_relevantText = mysql_real_escape_string($data['dataAsset']['0']['poli
 
 $result=[$dmpCreatedDate, $project_title, $project_startDate, $project_endDate, $contrib_firstname, $contrib_lastname,
     $contrib_affiliation, $contrib_email, $funder_name, $funder_code, $doc_shortname, $doc_summary, $da_shortname, $da_description,
-    $da_collectionProcess, $da_storageProcess, $da_metadataRequirements, $da_copyrightOwner, $ac_status, $ac_details, $ac_releaseDate,
+    $da_collectionProcess, $da_organisationProcess, $da_storageProcess, $da_metadataRequirements, $da_copyrightOwner, $ac_status, $ac_details, $ac_releaseDate,
     $ac_complianceProcess, $retention_type, $retention_untildate, $publicationProcess, $license_name, $license_logo, $archiving,
     $dataContact, $requiredResources, $issues_type, $issues_description, $policyreq_controllingBody, $policyreq_relevantText];
 
-echo '<!DOCTYPE html>';
-echo '<html>';
-echo '<head>';
-echo '<link rel="stylesheet" href="form_css/style1.css">';
-echo '</head>';
-echo '<body>';
+$html= '<!DOCTYPE html>';
+$html.='<html>';
+$html.='<head>';
+$html.='<link rel="stylesheet" href="form_css/style1.css">';
+$html.='</head>';
+$html.='<body class="table">';
 
-$arr=['DMP Created Date', 'Project Title', 'Project Start Date', 'Project End Date', 'Contributor First Name', 'Last Name', 'Affiliation', 'Email', 
-    'Funding Agency', 'Funding ID', 'Document Short Name', 'Summary', 'Type of Data', 'Description', 'Data Collection Process', 'Data Organisation Process',
-    'Data Storage Process', 'Meta Data Requirement', 'Copyright Owner', 'Data Access', 'Data Access Detail', 'Release Date', 'Compliance Process',
-    'Type of Data Retention', 'Data must be retained after submission of thesis or publication of results until', 'Data Publication Process', 'Data Licensing',
+$arr=['DMP Created Date', 'Project Title', 'Project Start Date', 'Project End Date', 'Contributor First Name', 'Last Name', 
+    'Affiliation', 'Email', 'Funding Agency', 'Funding ID', 'Document Short Name', 'Summary', 'Type of Data', 'Description', 
+    'Data Collection Process', 'Data Organisation Process', 'Data Storage Process', 'Meta Data Requirement', 'Copyright Owner', 'Data Access', 'Data Access Detail', 'Release Date', 
+    'Compliance Process', 'Type of Data Retention', 'Data must be retained after submission of thesis or publication of results until', 'Data Publication Process', 'Data Licensing',
     'License Logo', 'The long-term preservation plan for the dataset', 'Research Data Management Contact','Required Resources', 'Data Issues' ,
     'Issues Description', 'Policy Control Body', 'Policy Requirements'];
 
-echo $result;
+   $html.='<table font="12" border="1">';
+   $html.='<tr><th colspan="2"><h1 class="pen-title">Research Data Management Plan</h1></th></tr>';
+    
 if(count($result))
 {
-    $parser->parse('<h3>Research Data Management Plan</h3>');
-    for ($i=0;i<=count($result);$i++)
-        {
-            $parser->parse( '<p><b>'. $arr[$i]. ': </b> ' . $result[$i] .'</p>');
-        }
+    $html.='<tr align="left">';
+    $html.='<td colspan="2" bgcolor="#008CBA"><input class="button button2" type="button" onClick=parent.location="index.html" value="Back to Home"></td>';
+    $html.='</tr>';
+    for ($i=0;$i<count($result);$i++)
+    {
+        $html.='<tr class="form-module span" align="left">';
+        $html.='<td width="200" class="pen-title-left">'. $arr[$i] . ': ' .'</td>';
+        $html.='<td class="pen-title-left">' . $result[$i] .'</td>';
+        $html.='</tr>';
+    }
+    $html.='</table>';
 }
-$parser->parse('</body>');
-$parser->parse('</html>');
-$doc->saveAs( 'dmp.docx' );
+$html.='</body></html>';
+echo $html;
+//echo '<pre>'.($doc->getDocument()->getBody()->look()).'</pre>'; 
+$parser->parse($html);
+$doc->saveAs( 'dmp_formatted.docx' );
 echo 'Exported the selected json file to dmp.docx';
