@@ -1,5 +1,5 @@
 body {
-  background: #e9e9e9;
+  background: #ffffff;
   color: #666666;
   font-family: 'RobotoDraft', 'Roboto', sans-serif;
   font-size: 14px;
@@ -127,22 +127,25 @@ body {
   font-weight: 600;
   text-decoration: none;
 }
-.table {
-  position: relative;
+
+/* Form Module */
+.form-module {
+  /*position: relative;*/
   background: #ffffff;
+  color: rgb(0, 70, 127);
+  max-width: 320px;
   width: 100%;
-  border-top: 5px solid #33b5e5;
+  border-top: 5px solid #00467F;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 }
-/* Form Module */
-.form-module {
-  position: relative;
+
+.table {
   background: #ffffff;
-  max-width: 320px;
   width: 100%;
-  border-top: 5px solid #33b5e5;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #00467F;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0);
+  border-bottom-color: #00467F;
   margin: 0 auto;
 }
 .form-module .toggle {
